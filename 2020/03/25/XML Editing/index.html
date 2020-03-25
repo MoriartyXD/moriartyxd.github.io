@@ -1,0 +1,419 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 4.2.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/xvw/font-awesome/css/font-awesome.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"yoursite.com","root":"/","scheme":"Pisces","version":"7.7.2","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="XML文件编辑有关代码整理    版本号 改订概要 更新者 更新时间    Ver.1.0.0 初次作成 罗文轩 2020&#x2F;03&#x2F;16   相关命名空间 根据需求酌情取用  12345678910111213141516171819202122232425262728293031323334using System.IO;using System.Xml;using System.Xml.Seri">
+<meta property="og:type" content="article">
+<meta property="og:title" content="XML Editing">
+<meta property="og:url" content="http://yoursite.com/2020/03/25/XML%20Editing/index.html">
+<meta property="og:site_name" content="罗文轩的博客">
+<meta property="og:description" content="XML文件编辑有关代码整理    版本号 改订概要 更新者 更新时间    Ver.1.0.0 初次作成 罗文轩 2020&#x2F;03&#x2F;16   相关命名空间 根据需求酌情取用  12345678910111213141516171819202122232425262728293031323334using System.IO;using System.Xml;using System.Xml.Seri">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://img.shields.io/badge/CurrentVersion-1.0.0.0-brightgreen">
+<meta property="og:image" content="https://img.shields.io/badge/Language-Markdown-red">
+<meta property="og:image" content="https://img.shields.io/badge/Shields.io_Hyperlink_Test-Bilibili-pink">
+<meta property="article:published_time" content="2020-03-25T01:38:50.836Z">
+<meta property="article:modified_time" content="2020-03-24T06:44:13.039Z">
+<meta property="article:author" content="LuoWenXuan">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://img.shields.io/badge/CurrentVersion-1.0.0.0-brightgreen">
+
+<link rel="canonical" href="http://yoursite.com/2020/03/25/XML%20Editing/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-cn'
+  };
+</script>
+
+  <title>XML Editing | 罗文轩的博客</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="تشغيل شريط التصفح">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">罗文轩的博客</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="menu">
+        <li class="menu-item menu-item-主页">
+
+    <a href="/" rel="section"><i class="fa fa-fw fa-home"></i>主页</a>
+
+  </li>
+        <li class="menu-item menu-item-所有文章">
+
+    <a href="/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>所有文章</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post">
+            
+
+  <div class="posts-expand">
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-cn">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/03/25/XML%20Editing/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="LuoWenXuan">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="罗文轩的博客">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          XML Editing
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">نُشر في</span>
+
+              <time title="أُنشأ: 2020-03-25 09:38:50" itemprop="dateCreated datePublished" datetime="2020-03-25T09:38:50+08:00">2020-03-25</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">عُدل في</span>
+                <time title="عُدل: 2020-03-24 14:44:13" itemprop="dateModified" datetime="2020-03-24T14:44:13+08:00">2020-03-24</time>
+              </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h2 id="XML文件编辑有关代码整理"><a href="#XML文件编辑有关代码整理" class="headerlink" title="XML文件编辑有关代码整理"></a>XML文件编辑有关代码整理</h2><p><img src="https://img.shields.io/badge/CurrentVersion-1.0.0.0-brightgreen" alt="Current Version"><br><img src="https://img.shields.io/badge/Language-Markdown-red" alt="Language"><br><a href="http://www.bilibili.com" target="_blank" rel="noopener"><img src="https://img.shields.io/badge/Shields.io_Hyperlink_Test-Bilibili-pink" alt="BiliBili"></a></p>
+<table>
+<thead>
+<tr>
+<th align="center">版本号</th>
+<th align="center">改订概要</th>
+<th align="center">更新者</th>
+<th align="center">更新时间</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">Ver.1.0.0</td>
+<td align="center">初次作成</td>
+<td align="center">罗文轩</td>
+<td align="center">2020/03/16</td>
+</tr>
+</tbody></table>
+<h4 id="相关命名空间"><a href="#相关命名空间" class="headerlink" title="相关命名空间"></a>相关命名空间</h4><blockquote>
+<p>根据需求酌情取用</p>
+</blockquote>
+<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">using</span> System.IO;</span><br><span class="line"><span class="keyword">using</span> System.Xml;</span><br><span class="line"><span class="keyword">using</span> System.Xml.Serialization;</span><br><span class="line">``` </span><br><span class="line"></span><br><span class="line"><span class="meta">#### 读取XML文件</span></span><br><span class="line"></span><br><span class="line">```csharp</span><br><span class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">LoadXmlFile</span>(<span class="params"><span class="keyword">string</span> xmlFilePath</span>)</span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">try</span></span><br><span class="line">    &#123;</span><br><span class="line">        XmlDocument xmlDoc = <span class="keyword">new</span> XmlDocument();</span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span>(!File.Exists(configXmlPath))</span><br><span class="line">        &#123;</span><br><span class="line">            File.Create(configXmlPath);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">else</span></span><br><span class="line">        &#123;</span><br><span class="line">            <span class="comment">// XML文件内容读入</span></span><br><span class="line">            xmlDoc.Load(configXmlPath);</span><br><span class="line">            <span class="comment">// 注意，若文件不符合XML格式，该方法会报错</span></span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">catch</span> (XmlException xmlEx)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="comment">// XML文件读取错误处理</span></span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">catch</span>(Exception) </span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">throw</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h4 id="写入XML文件并导出"><a href="#写入XML文件并导出" class="headerlink" title="写入XML文件并导出"></a>写入XML文件并导出</h4><figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">SaveInfoToXml</span>(<span class="params"><span class="keyword">string</span> savePath</span>)</span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">try</span></span><br><span class="line">    &#123;</span><br><span class="line">        <span class="meta">#<span class="meta-keyword">region</span> CreateRootElement</span></span><br><span class="line"></span><br><span class="line">        <span class="comment">// 一个XML文件中只允许添加一个根节点（推测，详见补足说明）</span></span><br><span class="line">        XmlNode rootXmlNode = xmlDoc.CreateElement(<span class="string">"ROOT"</span>);</span><br><span class="line">        xmlDoc.AppendChild(rootXmlNode);</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 创建新的节点</span></span><br><span class="line">        XmlNode childNode1 = xmlDoc.CreateElement(<span class="string">"CHILD"</span>);</span><br><span class="line">        XmlNode childNode2 = xmlDoc.CreateElement(<span class="string">"CHILD"</span>);</span><br><span class="line">        childNode1.InnerText = <span class="string">"TEXT1"</span>;</span><br><span class="line">        childNode2.InnerText = <span class="string">"TEXT2"</span>;</span><br><span class="line">        <span class="comment">// </span></span><br><span class="line">        rootXmlNode.AppendChild(childNode1);</span><br><span class="line">        rootXmlNode.AppendChild(childNode2);</span><br><span class="line"></span><br><span class="line">        <span class="meta">#<span class="meta-keyword">endregion</span></span></span><br><span class="line">        <span class="comment">// XML文件保存</span></span><br><span class="line">        xmlDoc.Save(savePath);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">catch</span> (Exception)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">throw</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>补足说明</p>
+<ul>
+<li>一个XML文件只允许有一个根节点（因为往xmlDoc中再次追加根节点时代码执行报错，但是编译OK）</li>
+<li>XML子节点允许命名重复，但是根据路径匹配节点时，遵循优先匹配原则，所以需要按节点顺序新建节点以及设值</li>
+<li><del>保存操作需要在所有节点设置完成之后执行，否则会被最后一次保存覆盖</del></li>
+<li>节点信息会保存至当前使用的XmlDocument实例中<ul>
+<li>例如（在保存路径相同的前提下）：</li>
+<li>读取xml和写入xml时使用的是相同的XmlDocument实例，那么若写入相同的节点会在原有节点上多追加一笔值</li>
+<li>读取xml和写入xml时使用的是不同的XmlDocument实例，那么原来的xml文件会被覆盖</li>
+</ul>
+</li>
+</ul>
+</blockquote>
+<h4 id="判断当前XmlDocument中是否存在根节点"><a href="#判断当前XmlDocument中是否存在根节点" class="headerlink" title="判断当前XmlDocument中是否存在根节点"></a>判断当前XmlDocument中是否存在根节点</h4><figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//ルート要素の作成</span></span><br><span class="line">XmlElement rootElement = xmlDoc.DocumentElement;</span><br><span class="line"><span class="keyword">if</span> (rootElement == <span class="literal">null</span>)</span><br><span class="line">&#123;</span><br><span class="line">    <span class="comment">//ルート要素が存在しない場合</span></span><br><span class="line">    <span class="comment">//-ルート要素の作成</span></span><br><span class="line">    rootElement = xmlDoc.CreateElement(ROOTNODENAME);</span><br><span class="line">    <span class="comment">//-ルート要素をDOMドキュメントに追加</span></span><br><span class="line">    xmlDoc.AppendChild(rootElement);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2020/03/24/hello-world/" rel="prev" title="Hello World">
+      <i class="fa fa-chevron-left"></i> Hello World
+    </a></div>
+      <div class="post-nav-item"></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+  </div>
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          المحتويات
+        </li>
+        <li class="sidebar-nav-overview">
+          عام
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#XML文件编辑有关代码整理"><span class="nav-number">1.</span> <span class="nav-text">XML文件编辑有关代码整理</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#相关命名空间"><span class="nav-number">1.0.1.</span> <span class="nav-text">相关命名空间</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#写入XML文件并导出"><span class="nav-number">1.0.2.</span> <span class="nav-text">写入XML文件并导出</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#判断当前XmlDocument中是否存在根节点"><span class="nav-number">1.0.3.</span> <span class="nav-text">判断当前XmlDocument中是否存在根节点</span></a></li></ol></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">LuoWenXuan</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives">
+          <span class="site-state-item-count">2</span>
+          <span class="site-state-item-name">المقالات</span>
+        </a>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">LuoWenXuan</span>
+</div>
+  <div class="powered-by">تطبيق الموقع <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://pisces.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Pisces</a>
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/xvw/anime.min.js"></script>
+  <script src="/xvw/velocity/velocity.min.js"></script>
+  <script src="/xvw/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>
